@@ -1,0 +1,439 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Rafael Duarte's Master CV},
+    pdfauthor={Rafael Duarte},
+    pdfcreator={LaTeX},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+%\pagestyle{empty} % no header or footer
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % Limpa os cabeçalhos e rodapés padrão
+\renewcommand{\headrulewidth}{0.5pt} % Adiciona a linha divisória inferior
+
+% Ajusta o espaço do cabeçalho para caber as 3 linhas sem sobrepor o texto
+\setlength{\headheight}{45pt} 
+\setlength{\headsep}{15pt} % Espaço entre a linha do cabeçalho e o texto
+
+% Configuração do conteúdo centralizado do cabeçalho
+\fancyhead[C]{
+    \large \textsc{Curriculum Vitae} \,--\, \textbf{Rafael Mendonça Duarte} \\
+    \vspace{3pt}
+    \normalsize Information Systems Student at University of São Paulo (USP) \\
+    \vspace{3pt}
+    \footnotesize \hrefWithoutArrow{https://rmduarte.com.br}{\texttt{rmduarte.com.br}} \hspace{1cm} \hrefWithoutArrow{mailto:rmduarte@usp.br}{\texttt{rmduarte@usp.br}}
+}
+
+
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    -1pt
+}{
+    0.3 cm
+}{
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.0}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+    
+
+    \begin{header}
+        \fontsize{25 pt}{25 pt}\selectfont Rafael Mendonça Duarte
+
+        \vspace{5 pt}
+
+        \normalsize
+        \mbox{São Carlos, SP, Brazil}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:rmduarte@usp.br}{rmduarte@usp.br}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+55 (11) 9 4197-0036}{+55 11 9 4197-0036}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://rmduarte.com.br}{rmduarte.com.br}}%
+        
+        \vspace{3 pt}
+        
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/rafael-mendonca-duarte}{LinkedIn}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://scholar.google.com.br/citations?hl=en&user=PZFZg5EAAAAJ}{Google Scholar}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{http://lattes.cnpq.br/2314499895236009}{Currículo Lattes}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://orcid.org/0009-0008-7547-0601}{ORCID}}%
+    \end{header}
+    \thispagestyle{empty}
+
+    \vspace{5 pt - 0.3 cm}
+
+% ---------------------------------------------------------
+% PROFILE SUMMARY
+% ---------------------------------------------------------
+\section{Profile Summary}
+\begin{onecolentry}
+Information Systems student at the Institute of Mathematical and Computer Sciences of the University of São Paulo (ICMC-USP) with a strong academic record (GPA 8.6/10, no failures). Currently dedicated to the development and improvement of Graph Convolutional Neural Networks (GCNs) applied to image classification, achieving State-of-the-Art (SOTA) performance in recent research. Experienced in High-Performance Computing, deep learning, software integration, and business process automation.
+\end{onecolentry}
+\vspace{0.15cm}
+
+
+% ---------------------------------------------------------
+% EDUCATION
+% ---------------------------------------------------------
+\section{Education}
+
+\begin{twocolentry}{
+    Jan 2025 – Dec 2028 (Expected)
+}
+    \textbf{Bachelor of Science in Information Systems}, University of São Paulo (USP) -- ICMC
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \footnotesize\textbf{Academic Standing:} GPA: 8.6/10 (No failed courses). \\
+    \textbf{Relevant Coursework:} Data Structures, Modern Operating Systems, Object-Oriented Programming (OOP), Calculus, Linear Algebra, Statistics.
+\end{onecolentry}
+
+\vspace{0.20 cm}
+
+\begin{twocolentry}{
+    2022 – 2024
+}
+    \textbf{High School}, Anglo Alante Jundiaí
+\end{twocolentry}
+
+\vspace{0.15cm}
+
+% ---------------------------------------------------------
+% RESEARCH EXPERIENCE
+% ---------------------------------------------------------
+\section{Research Experience}
+        
+\begin{twocolentry}{
+    Aug 2025 – Present
+}
+    \textbf{Scientific Initiation Student / Research Intern}, University of São Paulo (USP)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \textit{Funded by "Pró-Reitoria de Pesquisa e Inovaçã0" (Starting Nov/2025). Advisor: Prof. Dr. Lucas Pascotti Valem.}
+\begin{highlights}
+        \item Investigated the influence of structural graph properties and message aggregation strategies in GCNs applied to image classification with limited labeled data.
+        \item Developed \textbf{GRaNDe} (Gaussian Rank-based Neighborhood Degree), a novel adaptive centrality measure that achieved \textbf{State-of-the-Art (SOTA)} performance, \textbf{improving accuracy by up to 14\%} over existing baselines.
+        \item \textbf{First-authored} the paper introducing the proposed method, which was accepted for publication at the Brazilian Symposium on Databases (\textbf{SBBD 2026}).
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \setlength{\leftskip}{0.3cm}
+    {\footnotesize \textbf{Key Skills:} \textit{Graph Neural Networks (GNNs), PyTorch, Machine Learning, Data Structures and Data Science.}}
+\end{onecolentry}
+
+\vspace{0.15cm}
+
+% ---------------------------------------------------------
+% PROFESSIONAL EXPERIENCE
+% ---------------------------------------------------------
+\section{Professional Experience}
+
+\begin{twocolentry}{
+    Sep 2025 – Oct 2025
+}
+    \textbf{Technical IT Monitor}, Pró-Aluno Program (USP)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \textit{Funded by "Pró-Reitoria de Graduação", "Pró-aluno Program".}
+    \begin{highlights}
+        \item Provided software and hardware technical support to users in the ICMC undergraduate laboratories.
+        \item Assisted students in the use of equipment and ensured the proper functioning and care of the local IT infrastructure.
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.20 cm}
+
+\begin{twocolentry}{
+    Jul 2025 – Sep 2025
+}
+    \textbf{IT Management Intern}, FK Trading
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+        \item \textbf{Automation \& Tooling:} Developed custom \textbf{Node.js scripts} for API integrations and web scraping to automate lead generation and client follow-ups. Implemented WhatsApp chatbots and trained 3 out of 5 internal coworkers, replacing manual Kanban funnels and boosting the team's \textbf{operational efficiency by 30\%}.
+        \item \textbf{Technical Consulting:} Acted as a consultant for 15 corporate clients, mapping business workflows and standardizing processes to guide their first-time adoption of CRM and ERP systems (RD Station, OMIE).
+        \item \textbf{Key Achievement:} Optimized a B2B client's sales pipeline to seamlessly manage up to \textbf{1,000 leads/day} and drive 200 monthly sales. In one critical instance, leveraged automations to help a 5-person sales team clear a backlog of \textbf{800 stalled leads in just 4 days}.
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \setlength{\leftskip}{0.3cm}
+    {\footnotesize \textbf{Key Skills:} \textit{Node.js, API Integration, CRM/ERP (RD Station, OMIE), Business Process Automation, Web Scraping, Mentorship.}}
+\end{onecolentry}
+
+\vspace{0.15 cm}
+
+% ---------------------------------------------------------
+% EXTENSION & LEADERSHIP PROJECTS
+% ---------------------------------------------------------
+\section{Extension \& Leadership Projects}
+
+\begin{twocolentry}{
+    May 2026 – Present
+}
+    \textbf{Director of High-Performance Computing (HPC) / Coordinator}, Project Egrégora (USP)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \textit{IEEE Computer Society Chapter \& EESC - São Carlos School of Engineering.}
+    \begin{highlights}
+        \item Acting as Student Project Coordinator for the technological extension area aimed at the re-characterization of "TV Box" hardware devices.
+        \item Coordinated the assembly of low-cost distributed computing clusters and the implementation of local database servers.
+        \item We orchestrated a \textbf{performance and scalability evaluation} of databases on resource-constrained ARM hardware utilizing Docker environments and, we analyzing the latency and throughput trade-offs across different architectures, benchmarking direct DB access with a focus to \textbf{optimize I/O problems}.
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \setlength{\leftskip}{0.3cm}
+    {\footnotesize \textbf{Key Skills:} \textit{Docker, Database Architecture, Performance Benchmarking, System Administration and FastAPI.}}
+\end{onecolentry}
+
+\vspace{0.20 cm}
+
+\begin{twocolentry}{
+    Mar 2026 – Present
+}
+    \textbf{Extension Member}, Corvus AI Group (USP)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \textit{Project: Combating Digital Disinformation: Fake Image Detection.}
+    \begin{highlights}
+        \item Acting as a volunteer member researching deep learning techniques in computer vision.
+        \item Corroborated with the development and continuous optimization of algorithms aimed at detecting fake images and mitigating digital disinformation.
+    \end{highlights}
+\end{onecolentry}
+
+\begin{twocolentry}{
+    Feb 2026 – Jun 2026
+}
+    \textbf{Digital Literacy Instructor for Seniors}, "Informática para a Terceira Idade" (USP)
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item 3rd Edition of the extension activity aimed at the digital inclusion of the external community of São Carlos.
+        \item Facilitated classes for the elderly community as a student monitor, teaching essential computer skills, internet navigation, and individually clarifying doubts to promote \textbf{technical autonomy}.
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.15 cm}
+
+% ---------------------------------------------------------
+% PUBLICATIONS
+% ---------------------------------------------------------
+\section{Publications}
+
+\begin{onecolentry}
+    \begin{highlightsforbulletentries}
+    \item \textbf{DUARTE, R. M.}; PONCIANO, J. R.; VALEM, L. P. \textit{"Gaussian Rank-Based Neighborhood Degree for Graph Neural Networks in Image Classification."} In: \textbf{Proceedings of the 41st Brazilian Symposium on Databases (SBBD 2026)}, São Carlos, SP, Brazil, 2026.
+    \begin{itemize}[topsep=0.05cm, parsep=0.05cm, leftmargin=0.5cm, label={--}]
+        \item \textbf{Status:} Accepted for publication in Conference Proceedings (Qualis A4).
+        \item \textbf{DOI (Preprint):} \url{https://doi.org/10.48550/arXiv.2605.24367}
+        \item \textbf{Relevance:} The main contribution is the GRaNDe method, a dynamic centrality measure that integrates neighborhood analysis with Gaussian distance weighting to capture node importance, effectively improving GNNs in image classification.
+    \end{itemize}
+    
+    \vspace{0.15cm}
+    
+    \item BRITO, G. M.; \textbf{DUARTE, R. M.}; VALEM, L. P. \textit{"Rank Correlation Graphs with Mutual Neighborhood Weighting for GCNs in Image Classification."} In: \textbf{Pattern Recognition Letters}, 2026.
+    \begin{itemize}[topsep=0.05cm, parsep=0.05cm, leftmargin=0.5cm, label={--}]
+        \item \textbf{Status:} Submitted / Major Review (Qualis A1).
+        \item \textbf{Relevance:} Introduces a strategy based on mutual neighborhood for weighting correlation graphs, bringing a comparative analysis of different weighting functions and topologies for consistent image classification.
+    \end{itemize}
+    \end{highlightsforbulletentries}
+\end{onecolentry}
+
+\vspace{0.15 cm}
+
+
+% ---------------------------------------------------------
+% AWARDS & EXTRACURRICULARS
+% ---------------------------------------------------------
+\section{Awards \& Distinctions}
+
+\begin{onecolentry}
+    \begin{highlightsforbulletentries}
+        \item \textbf{Academic Excellence Award (2024)} -- Granted by Anglo Alante Jundiaí.
+        \item \textbf{Bronze Medal (2024)} -- Kangaroo Math Competition.
+        \item \textbf{Bronze Medal (2024)} -- Brazilian Astronomy and Astronautics Olympiad (OBA).
+        \item \textbf{Silver Medal (2023)} -- Kangaroo Math Competition.
+        \item \textbf{Best Position Paper \& Best Director (2023)} -- High School United Nations Human Rights Council 1 (FACAMP) / FAMUN \& CJONU. Highlighted strong communication, diplomacy, and research skills.
+        \item \textbf{Bronze Medal (2022)} -- Brazilian Rocket Exhibition (MOBFOG).
+        \item \textbf{Two-time Finalist (4th Phase)} -- National History Olympiad (ONHB).
+    \end{highlightsforbulletentries}
+\end{onecolentry}
+
+
+\vspace{0.15 cm}
+% ---------------------------------------------------------
+% TECHNICAL SKILLS
+% ---------------------------------------------------------
+\section{Technical Skills}
+
+\begin{onecolentry}
+    \textbf{Programming \& Web:} Python, Java, Node.js, SQL, FastAPI. \\
+    \textbf{Machine Learning \& Data Science:} PyTorch, Graph Neural Networks (GNNs), NLP (Word2Vec), XGBoost, Pandas. \\
+    \textbf{Tools \& Infrastructure:} Docker, Git, Linux, API Integration. \\
+    \textbf{Core Concepts:} Data Structures, Object-Oriented Programming (OOP), Database Architecture, Business Process Automation, Statistics.
+\end{onecolentry}
+\vspace{0.15 cm}
+% ---------------------------------------------------------
+% LANGUAGES
+% ---------------------------------------------------------
+\section{Languages}
+
+\begin{onecolentry}
+    \textbf{Portuguese:} Native \hspace{0.5cm} | \hspace{0.5cm} \textbf{English:} Intermediate -- proficient in technical reading and writing
+\end{onecolentry}
+    
+\end{document}
