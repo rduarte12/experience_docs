@@ -1,0 +1,15 @@
+# Arquivos de compilação LaTeX
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+
+# Manter o PDF final
+!*.pdf
